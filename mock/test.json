@@ -1,0 +1,13 @@
+{
+  "vehicles" : [
+    {
+      "vin" : "A1234",
+      "uuid": "123e4567-e89b-12d3-a456-426614174000",
+      "batteryId" : "1234567890",
+      "deviceSn" : "12345667890",
+      "registerStatus" : 0,
+      "vehicleStatus" : 0,
+      "drivingStatus" : 0
+    }
+  ]
+}

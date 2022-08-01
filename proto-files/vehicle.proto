@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option go_package = "grpc-example/proto-files";
+
+enum RegisterStatus {
+  UNREGISTER = 0;
+  REGISTER = 1;
+}
+
+enum VehicleState {
+  NORMAL = 0; // 정상
+  CHECKING = 1; // 점검 필요
+}
+
+enum DrivingStatus {
+  DRIVING = 0; // 주행중
+  RELEASE = 1; // 시동끔
+}
+
+message VehicleInfo {
+  string uuid = 1; // UUID
+  string vin = 2; // VIN
+  string battery_id = 3; // 배터리고유번호
+  string device_sn = 4; // 단만기 S/N
+  RegisterStatus registerStatus = 5;
+  VehicleState vehicleStatus = 6;
+  DrivingStatus drivingStatus = 7;
+}
+
+message VehicleRequest {
+  string vin = 1;
+}
+
+message GetVehicleResponse {
+  repeated VehicleInfo vehicles = 1;
+}
+
+// API
+service VehicleService {
+  // 차량정보 리스트
+  rpc GetVehicleList(VehicleRequest) returns (GetVehicleResponse) {};
+
+  // 차량정보 업데이트
+  rpc UpdateVehilce(VehicleRequest) returns (GetVehicleResponse) {};
+}
+
+
+
+
+
