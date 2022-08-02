@@ -16,8 +16,6 @@ var (
 	port = flag.Int("port", 50051, "The server port")
 )
 
-type myType []map[string]string
-
 // server is used to implement VehicleServer.
 type server struct {
 	grpc_gen.UnimplementedVehicleServiceServer
@@ -28,7 +26,7 @@ func (s *server) GetVehicleList(ctx context.Context, request *grpc_gen.VehicleRe
 	vehicles := ReadFile()
 
 	return &grpc_gen.GetVehicleResponse{
-		Vehicles: vehicles,
+		Vehicles: vehicles.Vehicles,
 	}, nil
 }
 
@@ -37,21 +35,24 @@ func (s *server) UpdateVehicle(ctx context.Context, request *grpc_gen.VehicleReq
 	return nil, nil
 }
 
-func ReadFile() []*grpc_gen.VehicleInfo {
-	b, err := ioutil.ReadFile("./test.json")
+type Vehicles struct {
+	Vehicles []*grpc_gen.VehicleInfo `json:"vehicles"`
+}
+
+func ReadFile() *Vehicles {
+	b, err := ioutil.ReadFile("./mock/test.json")
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	var data []*grpc_gen.VehicleInfo
-	//type data []map[string]string
-
+	var data Vehicles
 	err = json.Unmarshal(b, &data)
 	if err != nil {
+		log.Fatalf("invalid format %v", err)
 		return nil
 	}
 
-	return nil
+	return &data
 }
 
 func main() {

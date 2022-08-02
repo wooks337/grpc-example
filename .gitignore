@@ -151,7 +151,7 @@ fabric.properties
 # AWS User-specific
 
 # Generated files
-gen
+gen/*.go
 
 # Sensitive or high-churn files
 
